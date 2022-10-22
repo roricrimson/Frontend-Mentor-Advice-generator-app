@@ -1,17 +1,19 @@
-const adviceId = document.querySelector(".advice-id");
-const advicePara = document.querySelector(".advice-para");
+const title = document.querySelector(".title");
+const advice = document.querySelector(".advice");
 const dice = document.querySelector(".dice");
-
-fetch(`	https://api.adviceslip.com/advice`)
-  .then((res) => res.json())
-  .then((res) => {
-    var id = res.slip.id;
-    var advice = res.slip.advice;
-
-    adviceId.innerHTML = id;
-    advicePara.innerHTML = advice;
-  });
-
+fetchData();
 dice.onclick = () => {
-  location.reload();
+  fetchData();
 };
+
+function fetchData() {
+  title.innerHTML = "";
+  advice.innerHTML = '"....."';
+
+  fetch(`https://api.adviceslip.com/advice`)
+    .then((res) => res.json())
+    .then((res) => {
+      title.innerHTML = `Advice # ${res.slip.id}`;
+      advice.innerHTML = `"${res.slip.advice}"`;
+    });
+}
